@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\messageController;
+use App\Http\Controllers\API\resepController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('tes', [messageController::class,'index']);
 Route::post('send', [messageController::class,'store']);
+Route::get('reseps', [resepController::class,'index']);
+Route::get('reseps/{slug}', [resepController::class,'show']);
+Route::post('reseps', [resepController::class,'addResep']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
