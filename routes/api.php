@@ -4,6 +4,7 @@ use App\Http\Controllers\API\messageController;
 use App\Http\Controllers\API\resepController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,11 @@ Route::get('reseps/{slug}', [resepController::class,'show']);
 Route::post('reseps', [resepController::class,'addResep']);
 Route::post('reseps/edit/{slug}', [resepController::class,'editResep']);
 Route::delete('reseps/{slug}', [resepController::class,'deleteResep']);
+
+Route::post('register',[UserAuthController::class,'register']);
+Route::post('login',[UserAuthController::class,'login']);
+Route::post('logout',[UserAuthController::class,'logout'])
+  ->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
