@@ -21,6 +21,8 @@ Route::post('send', [messageController::class,'store']);
 Route::get('reseps', [resepController::class,'index']);
 Route::get('reseps/{slug}', [resepController::class,'show']);
 Route::post('reseps', [resepController::class,'addResep']);
+Route::post('reseps/edit/{slug}', [resepController::class,'editResep']);
+Route::delete('reseps/{slug}', [resepController::class,'deleteResep']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

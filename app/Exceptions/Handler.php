@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Support\Facades\Http;
 
 class Handler extends ExceptionHandler
 {
@@ -47,4 +48,23 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function report(Throwable $exception)
+{
+    parent::report($exception);
+
+    // Kirim error ke Discord
+    try {
+        $message = "**Error Detected!**\n";
+        $message .= "```\n" . $exception->getMessage() . "\n```";
+        $message .= "File: " . $exception->getFile() . "\n";
+        $message .= "Line: " . $exception->getLine() . "\n";
+
+        Http::post(env('DISCORD_WEBHOOK'), [
+            'content' => $message
+        ]);
+    } catch (\Exception $e) {
+        // Supaya tidak infinite loop kalau error webhook
+    }
+}
 }

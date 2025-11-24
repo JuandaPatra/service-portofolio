@@ -80,4 +80,44 @@ class resepController extends Controller
 
         return ApiFormatter::createApi(201, 'Resep created successfully', $resep);
     }
+
+    public function editResep(Request $request, $slug)
+    {
+        $request->validate([
+            'name' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'source' => 'required|string',
+            'user_id' => 'nullable|integer',
+            'category_id' => 'nullable|integer',
+        ]);
+
+        $resep = Resep::where('slug', $slug)->firstOrFail();
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('resep', 'public');
+        } else {
+            $imagePath = $resep->image;
+        }
+
+        $resep->update([
+            'title' => $request->name,
+            // 'slug' => \Str::slug($request->name) . '-' . uniqid(),
+            'description' => $request->description,
+            'image' => $imagePath,
+            'source' => $request->source,
+            'user_id' => $request->user_id,
+            'category_id' => $request->category_id,
+        ]);
+
+        return ApiFormatter::createApi(200, 'Resep updated successfully', $resep);
+    }
+
+    public function deleteResep($slug)
+    {
+        $resep = Resep::where('slug', $slug)->firstOrFail();
+        $resep->delete();
+
+        return ApiFormatter::createApi(200, 'Resep deleted successfully');
+    }
 }

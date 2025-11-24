@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Helpers\ApiFormatter;
+use App\Helpers\Webhook;
 use App\Http\Controllers\Controller;
 use App\Models\Emails;
 use Illuminate\Http\Request;
@@ -31,12 +32,10 @@ class messageController extends Controller
 
         $discord_webhook = env('DISCORD_WEBHOOK');
 
-        $notif = Http::post(
-            $discord_webhook,
-            [
-                'content' => "New Message from: \nName: " . $request->name . "\nEmail: " . $request->email . "\nMessage: " . $request->message
-            ]             
-        );
+        $payload = [
+            'content' => "New Message from: \nName: " . $request->name . "\nEmail: " . $request->email . "\nMessage: " . $request->message
+        ];
+        Webhook::send($discord_webhook, $payload);
         
 
         return ApiFormatter::createApi(200, 'success', 'berhasil');
