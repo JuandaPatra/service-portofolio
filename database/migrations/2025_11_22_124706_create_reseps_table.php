@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('image');
             $table->text('description');
+            $table->text('ingredients')->nullable();
             $table->string('source');
             $table->integer('user_id')->nullable();
             $table->integer('category_id')->nullable();

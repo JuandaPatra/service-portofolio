@@ -10,8 +10,8 @@ services:
       - /var/www/html/vendor  # ⬅️ opsi no.2 → vendor hanya milik container
     ports:
       - "8000:8000"
-    # command: sh -c "php artisan serve --host=0.0.0.0 --port=8000"
-    command: tail -f /dev/null
+    command: sh -c "php artisan serve --host=0.0.0.0 --port=8000"
+    # command: tail -f /dev/null
     depends_on:
       - mysql
 

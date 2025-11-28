@@ -15,6 +15,7 @@ class resep extends Model
         'description',
         'image',
         'source',
+        'ingredients',
         'user_id',
         'category_id',
     ];

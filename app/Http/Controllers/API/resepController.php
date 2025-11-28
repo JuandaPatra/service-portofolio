@@ -64,6 +64,7 @@ class resepController extends Controller
             'source' => 'required|string',
             'user_id' => 'nullable|integer',
             'category_id' => 'nullable|integer',
+            'ingredients' => 'nullable|string',
         ]);
 
         $imagePath = $request->file('image')->store('images', 'public');
@@ -76,6 +77,7 @@ class resepController extends Controller
             'source' => $request->source,
             'user_id' => $request->user_id,
             'category_id' => $request->category_id,
+            'ingredients' => $request->ingredients,
         ]);
 
         return ApiFormatter::createApi(201, 'Resep created successfully', $resep);
@@ -90,6 +92,7 @@ class resepController extends Controller
             'source' => 'required|string',
             'user_id' => 'nullable|integer',
             'category_id' => 'nullable|integer',
+            'ingredients' => 'nullable|string',
         ]);
 
         $resep = Resep::where('slug', $slug)->firstOrFail();
@@ -108,6 +111,7 @@ class resepController extends Controller
             'source' => $request->source,
             'user_id' => $request->user_id,
             'category_id' => $request->category_id,
+            'ingredients' => $request->ingredients,
         ]);
 
         return ApiFormatter::createApi(200, 'Resep updated successfully', $resep);
